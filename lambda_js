@@ -1,0 +1,31 @@
+#js source code to invoke simple email service
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+const ses = new SESClient({ region: "ap-south-1" });
+
+export const handler = async(event) => {
+  const command = new SendEmailCommand({
+    Destination: {
+      ToAddresses: ["arunpuranam07@gmail.com"],
+    },
+    Message: {
+      Body: {
+        Text: { Data: "Hello..This is a Test mail" },
+      },
+
+      Subject: { Data: "Test Email" },
+    },
+    Source: "rangavalli03@gmail.com",
+  });
+
+  try {
+    let response = await ses.send(command);
+    // process data.
+    return response;
+  }
+  catch (error) {
+    // error handling.
+  }
+  finally {
+    // finally.
+  }
+};
